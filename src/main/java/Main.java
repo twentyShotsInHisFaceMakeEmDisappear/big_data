@@ -14,6 +14,13 @@ public class Main {
                 .option(Values.HEADER_OPTION, Boolean.TRUE).load(Values.DATASET_PATH);
 
         csvDataset.show();
+
+        Dataset<Row> result = csvDataset.select(csvDataset.col(Repositories.NAME),
+                        csvDataset.col(Repositories.PULL_REQUESTS), csvDataset.col(Repositories.FORKS_COUNT))
+                .filter(csvDataset.col(Repositories.PULL_REQUESTS).geq(1000))
+                .filter(csvDataset.col(Repositories.FORKS_COUNT).leq(10));
+
+        result.show(1000);
     }
 
 }
